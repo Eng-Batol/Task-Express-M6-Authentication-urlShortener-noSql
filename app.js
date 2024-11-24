@@ -1,17 +1,23 @@
+
 const express = require("express");
 const connectDb = require("./database");
 const urlRoutes = require("./api/urls/urls.routes");
 const userRoutes = require("./api/users/users.routes");
 const notFoundHandler = require("./middlewares/notFoundHandler");
 const errorHandler = require("./middlewares/errorHandler");
+const passport = require('./middlewares/passport'); 
+
+
 
 const app = express();
 connectDb();
 
 app.use(express.json());
+app.use(passport.initialize());
 
 app.use("/urls", urlRoutes);
-app.use(userRoutes);
+// app.use("/api/users",userRoutes);
+app.use("/users",userRoutes);
 
 app.use(notFoundHandler);
 app.use(errorHandler);
